@@ -1,5 +1,7 @@
 <h2 align="left">Printf("Hello World!")👋! My name is Raphael Okuyama and I am a computer engineering at FACENS.</h2>
-
+- 🔭 Atualmente estou cursando **Engenharia da Computação** no **Centro Universitário FACENS**!
+- 🌱 Atualmente estou aprendendo sobre **Desenvolvimento Web**!
+- ⚡ Curiosidades: Sou um entusiasta de **Jogos** e **Esportes**!
 ###
 
 <div align="center">
@@ -33,14 +35,15 @@
 <div align="left">
   <a href="https://www.instagram.com/rapha.okuyama/" target="_blank"><img src="https://img.shields.io/static/v1?message=Instagram&logo=instagram&label=&color=E4405F&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="instagram logo"  /></a>
   <a href="https://discord.com/users/596530783280300032" target="_blank"><img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"/></a>
-  <a href="mailto:rapha.okuyama@gmail.com"><img src="https://img.shields.io/static/v1?message=Gmail&logo=gmail&label=&color=D14836&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="gmail logo"  /></a>
+    <a href = "mailto:raphaelokuyama123@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank" height="35"></a>
   <a href="https://www.linkedin.com/in/raphael-okuyama/"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="linkedin logo"  /></a>
+    <a href="https://wa.me/5511992117230" target="_blank"><img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" target="_blank" height="35"></a> 
 </div>
 
 ###
 
 <br clear="both">
 
-<img src="https://raw.githubusercontent.com/maurodesouza/maurodesouza/output/snake.svg" alt="Snake animation" />
+![Snake animation](https://github.com/RaphaelOKuyama/RaphaelOkuyama/blob/output/github-contribution-grid-snake-dark.svg)
 
 ###
