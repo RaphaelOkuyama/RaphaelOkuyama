@@ -1,8 +1,12 @@
-<h2 align="left">Printf("Hello World!")👋! My name is Raphael Okuyama and I am a computer engineering at FACENS.</h2>
+<h2 align="left">Printf("Hello World!")👋! My name is Raphael Okuyama.</h2>
+
+<!-- Site para encontrar os emojis: https://emojipedia.org/search?q=bag -->
+
 - 🔭 Atualmente estou cursando **Engenharia da Computação** no **Centro Universitário FACENS**!
 - 🌱 Atualmente estou aprendendo sobre **Desenvolvimento Web**!
 - ⚡ Curiosidades: Sou um entusiasta de **Jogos** e **Esportes**!
-###
+
+##
 
 <div align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=RaphaelOkuyama&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=dracula&locale=en&hide_border=false" height="150" alt="stats graph"  />
