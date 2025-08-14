@@ -1,11 +1,11 @@
-<h2 align="left">Hello World! 👋 My name is Raphael Okuyama</h2>
+<h2 align="left">Hello World! 👋 My name is <strong>Raphael Okuyama</strong></h2>
 
 <p align="left">
-  🔭 I am currently pursuing a **Computer Engineering** degree at **Centro Universitário FACENS**.
+  🔭 I am currently pursuing a <strong>Computer Engineering</strong> degree at <strong>Centro Universitário FACENS</strong>.
   <br>
-  🌱 Currently, I am learning about **Web Development**.
+  🌱 Currently, I am learning about <strong>Web Development</strong>.
   <br>
-  ⚡ Fun fact: I am passionate about **Gaming** and **Sports**.
+  ⚡ Fun fact: I am passionate about <strong>Gaming</strong> and <strong>Sports</strong>.
 </p>
 
 ##
@@ -53,6 +53,11 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" height="30" alt="Prisma ORM" />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain-wordmark.svg" height="30" alt="PostgreSQL" />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/insomnia/insomnia-original.svg" height="30" alt="Insominia"/>
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" height="30" alt="ViteJS"/>
+  <img width="12" />
 </div>
 
 ###
