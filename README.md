@@ -51,10 +51,10 @@
 ![Insomnia](https://img.shields.io/badge/Insomnia-4000BF?style=for-the-badge&logo=insomnia&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Beekeeper Studio](https://img.shields.io/badge/Beekeeper%20Studio-2C3E50?style=for-the-badge&logo=beekeeperstudio&logoColor=white)
 
 #### 🛠️ Ferramentas de Desenvolvimento
 ![VS Code](https://img.shields.io/badge/VS%20Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
-![Beekeeper Studio](https://img.shields.io/badge/Beekeeper%20Studio-2C3E50?style=for-the-badge&logo=beekeeperstudio&logoColor=white)
 
 ---
 
