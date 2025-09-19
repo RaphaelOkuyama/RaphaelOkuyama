@@ -2,7 +2,7 @@
 
 <p align="left">
   🎓 Atualmente curso <strong>Engenharia de Computação</strong> no <strong>Centro Universitário FACENS</strong>.<br>
-  🌱 No momento, estou me aprofundando em <strong>Desenvolvimento Web</strong>.<br>
+  🌱 No momento, estou me aprofundando em <strong>Python com foco em análise de dados, machine learning e automação</strong><br>
   ⚡ Curiosidade: sou apaixonado por <strong>Games</strong> e <strong>Esportes</strong>.
 </p>
 
