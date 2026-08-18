@@ -1,3 +1,49 @@
+name: Build README assets (space shooter + terminal header)
+
+on:
+  schedule:
+    - cron: "0 3 * * *"      # todo dia as 00h BRT
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Gerar o header de terminal
+        run: |
+          pip install pyfiglet
+          python3 tools/terminal-header/generate.py dist
+
+      - name: Gerar o SVG do space shooter
+        run: node tools/space-shooter/generate.mjs "${{ github.repository_owner }}" dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publicar na branch output
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: output
 name: Space Shooter (contribution graph)
 
 on:
