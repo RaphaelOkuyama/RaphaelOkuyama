@@ -38,6 +38,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Gerar o card de estatisticas
+        run: node tools/stats-card/generate.mjs "${{ github.repository_owner }}" dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publicar na branch output
         uses: peaceiris/actions-gh-pages@v4
         with:
