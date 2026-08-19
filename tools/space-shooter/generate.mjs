@@ -65,8 +65,9 @@ const PAD_L = 34, PAD_R = 16, PAD_T = 30, MONTH_H = 16;
 const SHIP_GAP = 26, SHIP_H = 22, PAD_B = 14;
 
 // ------------------------------------------------------------- timeline ----
-const COL_T = 0.235;                 // segundos por coluna
-const TAIL = 3.2;                    // pausa + respawn no fim
+const MAX_SWEEP = 42;                // teto de duracao da fase de tiro (s)
+const SHOT_MIN = 0.18, SHOT_MAX = 0.62;  // limites de tempo por alvo
+const TAIL = 3.6;                    // pausa + respawn no fim
 const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 const DAYS = ["", "Seg", "", "Qua", "", "Sex", ""];
 
@@ -95,55 +96,95 @@ function build(cal, theme, user) {
   const shipY = gridY + gridH + SHIP_GAP;
   const H = shipY + SHIP_H + PAD_B;
 
-  const SWEEP = NCOL * COL_T;
-  const DUR = SWEEP + TAIL;
-  const pc = (s) => +(s / DUR * 100).toFixed(3);
-
-  const yStart = shipY + 2;            // origem do tiro
-  const yEnd = gridY - 8;              // topo do trajeto
-  const travel = yStart - yEnd;
-
-  const cells = [], kf = [];
-  const seen = new Set();
-  let destroyed = 0;
-
+  // ---- celulas + lista de alvos
+  const cellData = [];
   weeks.forEach((week, c) => {
     week.contributionDays.forEach((day) => {
       const r = day.weekday;
-      const lvl = LEVEL_IDX[day.contributionLevel] ?? 0;
-      const x = gridX + c * PITCH, y = gridY + r * PITCH;
-      if (lvl === 0) {
-        cells.push(`<rect x="${x}" y="${y}" width="${CELL}" height="${CELL}" rx="2.5" fill="${t.levels[0]}"/>`);
-        return;
-      }
-      destroyed++;
-      const yRow = y + CELL / 2;
-      const hit = c * COL_T + ((yStart - yRow) / travel) * COL_T;
-      const id = Math.round(hit * 1000);
-      if (!seen.has(id)) {
-        seen.add(id);
-        const a = pc(hit), b = pc(hit + 0.07), e = pc(hit + 0.2);
-        kf.push(
-          `@keyframes h${id}{0%,${a}%{opacity:1;transform:scale(1);filter:brightness(1)}` +
-          `${b}%{opacity:1;transform:scale(1.9);filter:brightness(3.2) saturate(1.6)}` +
-          `${e}%,${pc(SWEEP + 1.9)}%{opacity:0;transform:scale(.15);filter:brightness(3.2)}` +
-          `${pc(SWEEP + 2.5)}%,100%{opacity:1;transform:scale(1);filter:brightness(1)}}`,
-          `.h${id}{animation:h${id} ${DUR}s infinite both}`
-        );
-      }
-      cells.push(
-        `<rect class="c h${id}" x="${x}" y="${y}" width="${CELL}" height="${CELL}" rx="2.5" fill="${t.levels[lvl]}"><title>${day.date}: ${day.contributionCount}</title></rect>`
-      );
+      cellData.push({
+        c, r,
+        lvl: LEVEL_IDX[day.contributionLevel] ?? 0,
+        x: gridX + c * PITCH,
+        y: gridY + r * PITCH,
+        date: day.date,
+        count: day.contributionCount,
+      });
     });
   });
 
-  // rotulos de mes
+  // PRNG deterministico (mesma arte todo dia para o mesmo grafo)
+  let seed = 20260819;
+  const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  // ordem ALEATORIA dos alvos (Fisher-Yates)
+  const order = cellData.map((d, i) => (d.lvl > 0 ? i : -1)).filter((i) => i >= 0);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+
+  const N = Math.max(1, order.length);
+  const SHOT_T = Math.min(SHOT_MAX, Math.max(SHOT_MIN, MAX_SWEEP / N));
+  const SWEEP = N * SHOT_T;
+  const DUR = SWEEP + TAIL;
+  const pc = (s) => +(s / DUR * 100).toFixed(3);
+
+  const yStart = shipY + 2;                 // origem do tiro
+
+  // fatias de cada turno de tiro
+  const MOVE_END = 0.55, FIRE = 0.58, HIT = 0.97;
+
+  // ---- keyframes
+  const kf = [], shipKf = [], bulletKf = [];
+  const hitAt = new Map();                  // indice da celula -> instante do impacto
+
+  order.forEach((idx, i) => {
+    const d = cellData[idx];
+    const t0 = i * SHOT_T;
+    const tMove = t0 + MOVE_END * SHOT_T;
+    const tFire = t0 + FIRE * SHOT_T;
+    const tHit = t0 + HIT * SHOT_T;
+    const shipX = gridX + CELL / 2 + d.c * PITCH;
+    const dist = yStart - (d.y + CELL / 2);
+
+    hitAt.set(idx, tHit);
+    shipKf.push(`${pc(tMove)}%{transform:translateX(${shipX}px)}${pc(t0 + SHOT_T)}%{transform:translateX(${shipX}px)}`);
+    bulletKf.push(
+      `${pc(tFire - 0.001)}%{opacity:0;transform:translateY(0)}` +
+      `${pc(tFire)}%{opacity:1;transform:translateY(0)}` +
+      `${pc(tHit)}%{opacity:1;transform:translateY(${-dist}px)}` +
+      `${pc(tHit + 0.001)}%{opacity:0;transform:translateY(${-dist}px)}`
+    );
+  });
+
+  const seen = new Set();
+  const cells = cellData.map((d, idx) => {
+    if (d.lvl === 0) {
+      return `<rect x="${d.x}" y="${d.y}" width="${CELL}" height="${CELL}" rx="2.5" fill="${t.levels[0]}"/>`;
+    }
+    const hit = hitAt.get(idx);
+    const id = Math.round(hit * 1000);
+    if (!seen.has(id)) {
+      seen.add(id);
+      const a = pc(hit), b = pc(hit + 0.09), e = pc(hit + 0.26);
+      kf.push(
+        `@keyframes h${id}{0%,${a}%{opacity:1;transform:scale(1);filter:brightness(1)}` +
+        `${b}%{opacity:1;transform:scale(1.9);filter:brightness(3.2) saturate(1.6)}` +
+        `${e}%,${pc(SWEEP + 2.9)}%{opacity:0;transform:scale(.15);filter:brightness(3.2)}` +
+        `${pc(SWEEP + 3.4)}%,100%{opacity:1;transform:scale(1);filter:brightness(1)}}`,
+        `.h${id}{animation:h${id} ${DUR}s infinite both}`
+      );
+    }
+    return `<rect class="c h${id}" x="${d.x}" y="${d.y}" width="${CELL}" height="${CELL}" rx="2.5" fill="${t.levels[d.lvl]}"><title>${d.date}: ${d.count}</title></rect>`;
+  });
+
+  // ---- rotulos
   const months = [];
   let last = -1;
   weeks.forEach((week, c) => {
-    const d = new Date(week.contributionDays[0].date + "T00:00:00Z");
-    const m = d.getUTCMonth();
-    if (m !== last && d.getUTCDate() <= 7) {
+    const dd = new Date(week.contributionDays[0].date + "T00:00:00Z");
+    const m = dd.getUTCMonth();
+    if (m !== last && dd.getUTCDate() <= 7) {
       last = m;
       months.push(`<text x="${gridX + c * PITCH}" y="${gridY - 6}" font-size="9" fill="${t.text}">${MONTHS[m]}</text>`);
     }
@@ -152,10 +193,7 @@ function build(cal, theme, user) {
     d ? `<text x="${gridX - 6}" y="${gridY + i * PITCH + 9}" font-size="9" text-anchor="end" fill="${t.text}">${d}</text>` : ""
   ).join("");
 
-  // campo de estrelas
-  let seed = 7;
-  const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
-  const stars = Array.from({ length: 46 }, (_, i) => {
+  const stars = Array.from({ length: 46 }, () => {
     const x = (rnd() * W).toFixed(1), y = (rnd() * H).toFixed(1), rr = (0.5 + rnd() * 1.1).toFixed(2);
     return `<circle class="st" cx="${x}" cy="${y}" r="${rr}" fill="${t.star}" style="animation-delay:${(rnd() * 3).toFixed(2)}s"/>`;
   }).join("");
@@ -166,24 +204,22 @@ function build(cal, theme, user) {
       <rect x="5.3" y="4" width="3.2" height="7" rx="1.2" fill="${t.shipDark}"/>
       <ellipse class="thrust" cx="0" cy="12" rx="2.6" ry="4.6" fill="${t.flash}"/>`;
 
-  const maxX = (NCOL - 1) * PITCH;
+  const homeX = gridX + CELL / 2 + cellData[order[0]].c * PITCH;
   const css = `
   text{font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,Consolas,'Liberation Mono',Menlo,monospace}
   .c{transform-box:fill-box;transform-origin:center}
-  .fleet{transform:translateX(${gridX + CELL / 2}px);animation:sweep ${DUR}s steps(${NCOL},end) infinite both}
-  @keyframes sweep{0%{transform:translateX(${gridX + CELL / 2}px)}
-    ${pc(SWEEP)}%{transform:translateX(${gridX + CELL / 2 + maxX}px)}
-    ${pc(SWEEP + 2.2)}%{transform:translateX(${gridX + CELL / 2 + maxX}px)}
-    ${pc(SWEEP + 2.9)}%,100%{transform:translateX(${gridX + CELL / 2}px)}}
-  .bullet{animation:fly ${COL_T}s linear infinite,bvis ${DUR}s infinite both}
-  @keyframes fly{0%{transform:translateY(0);opacity:1}92%{opacity:1}100%{transform:translateY(${-travel}px);opacity:0}}
-  @keyframes bvis{0%,${pc(SWEEP)}%{opacity:1}${pc(SWEEP + 0.01)}%,100%{opacity:0}}
+  .fleet{animation:sweep ${DUR}s linear infinite both}
+  @keyframes sweep{0%{transform:translateX(${homeX}px)}${shipKf.join("")}
+    ${pc(SWEEP + 3.4)}%,100%{transform:translateX(${homeX}px)}}
+  .bullet{animation:fly ${DUR}s linear infinite both}
+  @keyframes fly{0%{opacity:0;transform:translateY(0)}${bulletKf.join("")}
+    ${pc(SWEEP + 0.02)}%,100%{opacity:0;transform:translateY(0)}}
   .thrust{transform-box:fill-box;transform-origin:center top;animation:thrust .16s steps(2,end) infinite}
   @keyframes thrust{0%{transform:scaleY(1)}100%{transform:scaleY(.45)}}
   .st{animation:tw 3s ease-in-out infinite alternate}
   @keyframes tw{0%{opacity:.25}100%{opacity:1}}
   .clear{opacity:0;animation:clear ${DUR}s infinite both}
-  @keyframes clear{0%,${pc(SWEEP + 0.15)}%{opacity:0}${pc(SWEEP + 0.5)}%,${pc(SWEEP + 2.1)}%{opacity:1}${pc(SWEEP + 2.4)}%,100%{opacity:0}}
+  @keyframes clear{0%,${pc(SWEEP + 0.3)}%{opacity:0}${pc(SWEEP + 0.7)}%,${pc(SWEEP + 2.4)}%{opacity:1}${pc(SWEEP + 2.8)}%,100%{opacity:0}}
   ${kf.join("")}`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Space shooter destruindo o grafo de contribuicoes de ${user}">
@@ -191,7 +227,7 @@ function build(cal, theme, user) {
 <style>${css}</style>
 <g>${stars}</g>
 <text x="${gridX}" y="${PAD_T - 12}" font-size="11" font-weight="bold" fill="${t.hud}">SCORE ${String(cal.totalContributions).padStart(5, "0")}</text>
-<text x="${W - PAD_R}" y="${PAD_T - 12}" font-size="11" text-anchor="end" fill="${t.accent}">TARGETS ${destroyed}</text>
+<text x="${W - PAD_R}" y="${PAD_T - 12}" font-size="11" text-anchor="end" fill="${t.accent}">TARGETS ${order.length}</text>
 ${months.join("")}
 ${daysLbl}
 <g>${cells.join("")}</g>
