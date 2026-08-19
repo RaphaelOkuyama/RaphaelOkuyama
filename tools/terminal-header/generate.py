@@ -21,10 +21,10 @@ PROMPT = "raphaelokuyama@github ~ $ whoami"
 
 INFO = [
     ("OS",      "Full-Stack Developer (React / Next.js / NestJS)"),
-    ("HOST",    "FACENS \u2014 Eng. de Computa\u00e7\u00e3o, 9\u00ba semestre"),
+    ("HOST",    "FACENS \u2014 Eng. de Computa\u00e7\u00e3o, 10\u00ba semestre"),
     ("KERNEL",  "TypeScript 5.x on Node.js"),
-    ("UPTIME",  "IMACARDIOS \u2014 em produ\u00e7\u00e3o desde 2024"),
-    ("PACKAGES","38 cl\u00ednicas \u00b7 1.000+ laudos assinados/m\u00eas"),
+    ("UPTIME",  "IMACARDIOS \u2014 em produ\u00e7\u00e3o desde 2026"),
+    ("PACKAGES","42 cl\u00ednicas \u00b7 2.000+ laudos assinados/m\u00eas"),
     ("SHELL",   "Clean Architecture \u00b7 SOLID \u00b7 LGPD"),
     ("MEMORY",  "Python / Pandas / Power BI  [aprendendo]"),
     ("STATUS",  "open to work \u2014 est\u00e1gio & freelance"),
