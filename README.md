@@ -21,7 +21,7 @@
 ## Raphael Okuyama — Desenvolvedor Full-Stack (TypeScript · Next.js · NestJS)
 
 Construo e mantenho **software em produção com usuário real pagando**: hoje sou o desenvolvedor full-stack
-da **IMACARDIOS**, plataforma B2B de telecardiologia que roda em 38 clínicas e assina mais de 1.000 laudos
+da **IMACARDIOS**, plataforma B2B de telecardiologia que roda em 42 clínicas e assina mais de 2.000 laudos
 por mês. Formando em Engenharia de Computação pela FACENS (Dez/2026), com foco em Clean Architecture,
 testes automatizados e segurança sob LGPD.
 
@@ -36,7 +36,7 @@ testes automatizados e segurança sob LGPD.
 
 Plataforma de telemedicina e telelaudos para redes de saúde no Brasil e LATAM.
 
-- Sustento **1.000+ laudos assinados/mês para 38 clínicas e 10+ cardiologistas** sem vazamento de dados
+- Sustento **2.000+ laudos assinados/mês para 42 clínicas e 10+ cardiologistas** sem vazamento de dados
   entre contas, projetando uma arquitetura **multi-tenant** com isolamento por clínica e **RBAC** por perfil.
 - Encurtei o ciclo *upload → revisão → assinatura* a um único fluxo operacional, entregando um painel com
   **fila priorizada por urgência e SLA em tempo real** para a equipe de operação.
@@ -86,8 +86,8 @@ Plataforma de ensino no estilo Netflix, com trilhas de estudo e player integrado
 
 ## Experiência
 
-**Desenvolvedor Full-Stack Freelance** — IMACARDIOS · `2024 – atual`
-- Entreguei e opero um produto comercial em produção usado por **38 clínicas**, conduzindo sozinho o ciclo
+**Desenvolvedor Full-Stack Freelance** — IMACARDIOS · `2026 – atual`
+- Entreguei e opero um produto comercial em produção usado por **42 clínicas**, conduzindo sozinho o ciclo
   completo: levantamento de requisitos com o cliente, arquitetura, implementação, deploy e evolução.
 
 **Prefeitura de Mairinque** — Estagiário de Desenvolvimento de Software e TI · `Fev/2025 – atual`
@@ -165,8 +165,11 @@ Plataforma de ensino no estilo Netflix, com trilhas de estudo e player integrado
 
 <div align="center">
 
-<img height="165" alt="Estatísticas do GitHub de Raphael Okuyama" src="https://github-readme-stats.vercel.app/api?username=RaphaelOkuyama&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true&card_width=420" />
-<img height="165" alt="Linguagens mais usadas" src="https://github-readme-stats.vercel.app/api/top-langs/?username=RaphaelOkuyama&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true&layout=compact&card_width=330" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats.svg" />
+  <img alt="Estatísticas do GitHub e linguagens mais usadas de Raphael Okuyama" src="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats.svg" width="100%" />
+</picture>
 
 </div>
 
