@@ -76,14 +76,17 @@ function build(u, theme, user) {
   const c = u.contributionsCollection;
   const stars = u.repositories.nodes.reduce((a, r) => a + r.stargazerCount, 0);
 
+  // linhas zeradas nao entram no card
+  const maybe = (label, n) => (n > 0 ? [[label, fmt(n)]] : []);
   const rows = [
     ["Contribuições (últ. ano)", fmt(c.contributionCalendar.totalContributions)],
     ["Commits (últ. ano)", fmt(c.totalCommitContributions)],
-    ["Pull requests", fmt(c.totalPullRequestContributions)],
-    ["Code reviews", fmt(c.totalPullRequestReviewContributions)],
-    ["Issues abertas", fmt(c.totalIssueContributions)],
+    ...maybe("Commits em repos privados", c.restrictedContributionsCount),
+    ...maybe("Pull requests", c.totalPullRequestContributions),
+    ...maybe("Code reviews", c.totalPullRequestReviewContributions),
+    ...maybe("Issues abertas", c.totalIssueContributions),
     ["Repositórios próprios", fmt(u.repositories.totalCount)],
-    ["Estrelas recebidas", fmt(stars)],
+    ...maybe("Estrelas recebidas", stars),
   ];
 
   // top linguagens por bytes
