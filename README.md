@@ -183,14 +183,4 @@ Plataforma de ensino no estilo Netflix, com trilhas de estudo e player integrado
   <img alt="Nave destruindo o grafo de contribuições do GitHub" src="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/space-shooter.svg" width="100%" />
 </picture>
 
-<sub>Gerado diariamente por <a href="./.github/workflows/space-shooter.yml">GitHub Actions</a> · código em <a href="./tools/space-shooter/generate.mjs"><code>tools/space-shooter</code></a></sub>
-
 </div>
-
-<!--
-  TODO — números que eu ainda preciso preencher para deixar o XYZ 100%:
-  - IMACARDIOS: tempo médio do laudo antes x depois; cobertura de testes (%); uptime.
-  - Gestão de Treinos: nº de usuários/planos gerados; tempo médio de resposta da geração.
-  - DevFlix: nº de alunos/trilhas; tempo de carga do player.
-  Substitua os trechos genéricos ("em segundos", "sem degradação") por números reais assim que tiver.
--->
