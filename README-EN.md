@@ -21,7 +21,7 @@
 ## Raphael Okuyama — Full-Stack Developer (TypeScript · Next.js · NestJS)
 
 I build and run **production software with real paying users**: I'm the full-stack developer behind
-**IMACARDIOS**, a B2B tele-cardiology platform running in 38 clinics and signing 1,000+ medical reports
+**IMACARDIOS**, a B2B tele-cardiology platform running in 42 clinics and signing 2,000+ medical reports
 a month. Computer Engineering senior at FACENS, Brazil (graduating Dec/2026), focused on Clean
 Architecture, automated testing and healthcare-grade data protection (Brazilian LGPD).
 
@@ -36,7 +36,7 @@ Architecture, automated testing and healthcare-grade data protection (Brazilian 
 
 Telemedicine and remote-reporting platform for healthcare networks in Brazil and LATAM.
 
-- Sustain **1,000+ signed reports/month across 38 clinics and 10+ cardiologists** with zero cross-tenant
+- Sustain **2,000+ signed reports/month across 42 clinics and 10+ cardiologists** with zero cross-tenant
   data leakage, by designing a **multi-tenant** architecture with per-clinic isolation and role-based
   access control.
 - Collapsed the *upload → review → signature* cycle into a single operational flow, by shipping an ops
@@ -87,8 +87,8 @@ Netflix-style learning platform with study tracks and an integrated video player
 
 ## Experience
 
-**Freelance Full-Stack Developer** — IMACARDIOS · `2024 – present`
-- Delivered and now operate a commercial production product used by **38 clinics**, owning the whole
+**Freelance Full-Stack Developer** — IMACARDIOS · `2026 – present`
+- Delivered and now operate a commercial production product used by **42 clinics**, owning the whole
   cycle alone: requirements with the client, architecture, implementation, deployment and iteration.
 
 **Mairinque City Hall** — Software Development & IT Intern · `Feb/2025 – present`
@@ -166,8 +166,11 @@ Netflix-style learning platform with study tracks and an integrated video player
 
 <div align="center">
 
-<img height="165" alt="Raphael Okuyama's GitHub stats" src="https://github-readme-stats.vercel.app/api?username=RaphaelOkuyama&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true&card_width=420" />
-<img height="165" alt="Most used languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=RaphaelOkuyama&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true&layout=compact&card_width=330" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats.svg" />
+  <img alt="Raphael Okuyama's GitHub stats and most used languages" src="https://raw.githubusercontent.com/RaphaelOkuyama/RaphaelOkuyama/output/stats.svg" width="100%" />
+</picture>
 
 </div>
 
